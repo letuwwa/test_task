@@ -26,16 +26,33 @@ class JsonTester:
 
         test_count = 0
         errors_count = 0
-        for schema_data in schemes_data:
-            for json_data in jsons_data:
+        # for schema_data in schemes_data:
+        #     for json_data in jsons_data:
+        #         try:
+        #             test_count += 1
+        #             validate(instance=json_data, schema=schema_data)
+        #         except jsonschema.exceptions.ValidationError as err:
+        #             errors_count += 1
+        #             error_text = str(err)
+        #             print(error_text)
+        #             print('spl:', error_text.split('\n')[0])
+
+        for i in range(len(schemes_data)):
+            for j in range(len(jsons_data)):
                 try:
                     test_count += 1
-                    validate(instance=json_data, schema=schema_data)
+                    validate(instance=jsons_data[j], schema=schemes_data[i])
                 except jsonschema.exceptions.ValidationError as err:
                     errors_count += 1
                     error_text = str(err)
-                    # print(err)
-                    print(error_text.split('\n')[0])
+                    error_help = error_text.split('\n')[0].split(' ')[0]
+
+                    print('Ошибка в процессе проверки схемы:', schemes_list[i], 'с файлом:', jsons_list[j])
+                    print('Текст ошибки:', error_text.split('\n')[0])
+                    if error_help == 'None':
+                        print('Совет по исправлению - откройте файл, возможно там нет данных...')
+                    else:
+                        print('Совет по исправлению - добавьте необходимое свойство:', error_help)
 
         print(test_count)
         print(errors_count)
