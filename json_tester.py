@@ -11,7 +11,7 @@ class JsonTester:
         self.schemes_dir = schemes_dir
 
     def validate(self):
-        html_head = """{<table border=1 class="dataTable">
+        html_head = """<table border=1 class="dataTable">
             <tr>
             <td><strong>Found error  </strong></td>
             <td><strong>Error text</strong></td>
@@ -48,8 +48,6 @@ class JsonTester:
 
                     html_table = """<tr><td>{}</td><td>{}</td><td>{}</td></tr>""".format(error, error_text, advice)
                     html_head += html_table
-
-        html_head += """}"""
 
         with open('README.md', 'w') as file:
             file.write(html_head)
