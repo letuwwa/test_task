@@ -19,7 +19,7 @@ class JsonTester:
                 <title>Result</title>
                 </head>
                 <body>
-                <table class="dataTable">
+                <table border=1 class="dataTable">
                 <tr>
                 <td><strong>Found error  </strong></td>
                 <td><strong>Error text</strong></td>
@@ -40,15 +40,11 @@ class JsonTester:
             data = self.__get_json(json_file)
             jsons_data.append(data)
 
-        test_count = 0
-        errors_count = 0
         for i in range(len(schemes_data)):
             for j in range(len(jsons_data)):
                 try:
-                    test_count += 1
                     validate(instance=jsons_data[j], schema=schemes_data[i])
                 except jsonschema.exceptions.ValidationError as err:
-                    errors_count += 1
                     error = 'Error during validation scheme: ' + str(schemes_list[i]) + ' with file:' + str(jsons_list[j])
                     error_text = str(err).split('\n')[0]
 
@@ -75,9 +71,6 @@ class JsonTester:
 
         with open('README.html', 'w') as file:
             file.write(html_head)
-
-        print(test_count)
-        print(errors_count)
 
     def __get_schema(self, schema_name):
         with open(self.schemes_dir + schema_name, 'r') as file:
