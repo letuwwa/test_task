@@ -13,11 +13,6 @@ class JsonTester:
     def validate(self):
         html_head = """
         {
-                <head>
-                <meta charset="utf-8">
-                <title>Result</title>
-                </head>
-                <body>
                 <table border=1 class="dataTable">
                 <tr>
                 <td><strong>Found error  </strong></td>
@@ -63,8 +58,7 @@ class JsonTester:
                     html_head += html_table
 
         html_head += """
-            </table>
-            </body>
+
             }
         """
 

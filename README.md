@@ -1,10 +1,5 @@
 
         {
-                <head>
-                <meta charset="utf-8">
-                <title>Result</title>
-                </head>
-                <body>
                 <table border=1 class="dataTable">
                 <tr>
                 <td><strong>Found error  </strong></td>
@@ -396,7 +391,6 @@
                                         <td>Add required property:'activity_name'</td>
                                     </tr>                            
                                 
-            </table>
-            </body>
+
             }
         
