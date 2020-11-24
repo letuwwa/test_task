@@ -12,8 +12,6 @@ class JsonTester:
 
     def validate(self):
         html_head = """
-                <!DOCTYPE html>
-                <html lang="ru">
                 <head>
                 <meta charset="utf-8">
                 <title>Result</title>
@@ -66,7 +64,6 @@ class JsonTester:
         html_head += """
             </table>
             </body>
-            </html>
         """
 
         with open('README.md', 'w') as file:
