@@ -69,7 +69,7 @@ class JsonTester:
             </html>
         """
 
-        with open('README.html', 'w') as file:
+        with open('README.md', 'w') as file:
             file.write(html_head)
 
     def __get_schema(self, schema_name):
