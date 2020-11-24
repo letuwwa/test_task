@@ -11,6 +11,22 @@ class JsonTester:
         self.schemes_dir = schemes_dir
 
     def validate(self):
+        html_head = """
+                <!DOCTYPE html>
+                <html lang="ru">
+                <head>
+                <meta charset="utf-8">
+                <title>Result</title>
+                </head>
+                <body>
+                <table class="dataTable">
+                <tr>
+                <td><strong>Found error  </strong></td>
+                <td><strong>Error text</strong></td>
+                <td><strong>Advice</strong></td>
+                </tr>
+                    """
+
         schemes_list = self.__get_schemes_filenames()
         jsons_list = self.__get_jsons_filenames()
 
@@ -26,17 +42,6 @@ class JsonTester:
 
         test_count = 0
         errors_count = 0
-        # for schema_data in schemes_data:
-        #     for json_data in jsons_data:
-        #         try:
-        #             test_count += 1
-        #             validate(instance=json_data, schema=schema_data)
-        #         except jsonschema.exceptions.ValidationError as err:
-        #             errors_count += 1
-        #             error_text = str(err)
-        #             print(error_text)
-        #             print('spl:', error_text.split('\n')[0])
-
         for i in range(len(schemes_data)):
             for j in range(len(jsons_data)):
                 try:
@@ -44,15 +49,32 @@ class JsonTester:
                     validate(instance=jsons_data[j], schema=schemes_data[i])
                 except jsonschema.exceptions.ValidationError as err:
                     errors_count += 1
-                    error_text = str(err)
-                    error_help = error_text.split('\n')[0].split(' ')[0]
+                    error = 'Error during validation scheme: ' + str(schemes_list[i]) + ' with file:' + str(jsons_list[j])
+                    error_text = str(err).split('\n')[0]
 
-                    print('Ошибка в процессе проверки схемы:', schemes_list[i], 'с файлом:', jsons_list[j])
-                    print('Текст ошибки:', error_text.split('\n')[0])
+                    error_help = str(err).split('\n')[0].split(' ')[0]
                     if error_help == 'None':
-                        print('Совет по исправлению - откройте файл, возможно там нет данных...')
+                        advice = 'Please, open file and chek it...'
                     else:
-                        print('Совет по исправлению - добавьте необходимое свойство:', error_help)
+                        advice = 'Add required property:' + str(error_help)
+
+                    html_table = """
+                                    <tr>
+                                        <td>{}</td>
+                                        <td>{}</td>
+                                        <td>{}</td>
+                                    </tr>                            
+                                """.format(error, error_text, advice)
+                    html_head += html_table
+
+        html_head += """
+            </table>
+            </body>
+            </html>
+        """
+
+        with open('README.html', 'w') as file:
+            file.write(html_head)
 
         print(test_count)
         print(errors_count)
